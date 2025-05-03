@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Authentication</title>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js"></script>
+
+    <!-- CSS -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        .login-form h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        h5 {
+            font-size: 13px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Form login -->
+    <div class="login-container">
+        <form action="" class="login-form" id="loginForm">
+            <h2>Login Page</h2>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="email" id="username" name="username" placeholder="Masukan Email / Username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Masukan Password" required>
+            </div>
+            <button type="submit">Login</button>
+            <!-- <a href="register.html" class="register-link">Register</a> -->
+            <h5>Belum punya akun? <a href="register.html" class="register-link">Register</a></h5>
+        </form>
+    </div>
+
+
+						
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+
+																		 
+	  
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyDXUPY72ajM9RFhWtEG_upv6oPqSJgZKT4",
+    authDomain: "fir-khalil-ec793.firebaseapp.com",
+    projectId: "fir-khalil-ec793",
+    storageBucket: "fir-khalil-ec793.firebasestorage.app",
+    messagingSenderId: "645273961358",
+    appId: "1:645273961358:web:512396eaa470fa95851adf"
+  };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Get the login form and input fields
+        const loginForm = document.getElementById("loginForm");
+        const usernameInput = document.getElementById("username");
+        const passwordInput = document.getElementById("password");
+
+        // Add event listener to the form for login
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault(); // Prevent the default form submission
+
+            const email = usernameInput.value;
+            const password = passwordInput.value;
+
+            // Sign in the user with Firebase Authentication
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    alert("Login successful: " + user.email);
+                    window.location.href = "dashboard.html"; // Redirect to dashboard after successful login
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
+                });
+        });
+		
+    </script>
+					  
+
+	
+</body>
+</html>
